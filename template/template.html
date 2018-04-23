@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang = "en-US">
+
+<head>
+<title> AHS Maps</title>
+
+<link rel="icon" type="image/png" href="favicon.png" />
+
+		<script src="processing.js" type="text/javascript"></script>
+
+		<style>
+		body{
+			font-family: "Verdana", sans-serif;
+			text-align: center;
+			background-color: #FFFFFF;
+		}
+		h1{
+			font-size: 50px;
+			line-height: 0px;
+			padding: 0px;
+		}
+		input{
+			vertical-align:text-bottom;
+			height:30px;
+		}
+		img{
+			vertical-align:text-bottom;
+		}
+		button{
+			vertical-align:text-bottom;
+		}
+		#subtitle{
+			font-size: 18px;
+		}
+
+		#nodeInput{
+			font-size: 30px;
+		}
+		#directionsButton{
+			font-size:25px;
+		}
+
+		#mapinteractions,
+		div{
+			font-size : 30px;
+		}
+		button{
+			font-size : 20px;
+		}
+
+		#disclaimer{
+			font-size : 11px;
+			padding: 0px;
+		}
+		#directions{
+			line-height: 35px;
+			font-size: 20px;
+			font-style: italic;
+			margin: auto;
+    	display: block;
+			border: 5px solid black;
+			width: 90%;
+		}
+		#AHS_Maps {
+			border: 5px solid black;
+    	margin: auto;
+    	display: block;
+			width: 90%;
+		}
+		#contact{
+			font-size: 18px;
+		}
+		#bottomDetails{
+			font-size: 12px;
+		}
+		</style>
+
+</head>
+
+	<body>
+
+		<script type="text/javascript">
+
+		function updateMapPath(){
+			var sketch = Processing.getInstanceById("AHS_Maps");
+			var location = document.getElementById("nodeInput").elements[0].value;
+			var destination = document.getElementById("nodeInput").elements[1].value;
+			sketch.updateMapPath(location,destination);
+			if (sketch.getCurrentDirection() != null){
+				document.getElementById("directions").innerHTML = sketch.getCurrentDirection();
+			} else{
+				document.getElementById("directions").innerHTML = "unable to get directions";
+			}
+		}
+
+		function upFloor(){
+			var sketch = Processing.getInstanceById("AHS_Maps");
+			sketch.upFloor();
+		}
+
+		function downFloor(){
+			var sketch = Processing.getInstanceById("AHS_Maps");
+			sketch.downFloor();
+		}
+
+		function advanceDirections(){
+			var sketch = Processing.getInstanceById("AHS_Maps");
+			if (sketch.getCurrentDirection() != null){
+				sketch.advanceDirections();
+				document.getElementById("directions").innerHTML = sketch.getCurrentDirection();
+			}
+		}
+
+		function backtrackDirections(){
+			var sketch = Processing.getInstanceById("AHS_Maps");
+			if (sketch.getCurrentDirection() != null){
+				sketch.backtrackDirections();
+				document.getElementById("directions").innerHTML = sketch.getCurrentDirection();
+			}
+		}
+		</script>
+
+		<h1><img src= "AHS_logo.png" alt="A" width = "70" height = "65">HS Maps</h1>
+
+		<p id = "subtitle"> By Josh Katofsky, Kieran O'Day, and George Barker</p>
+
+		<hr width = "100%" size = "5" noshade></hr>
+
+		<p>Input your location and destination to receive directions! Ex: "Room 431", "Media Center", or "336"</p>
+
+		<form id = "nodeInput" action = "javascript:updateMapPath()">
+	  Location: <input type="text" name="location" id = "location">
+	  Destination: <input type="text" name="destination" id = "destination">
+	  <button type="submit" value="Get Directions!" id = "directionsButton"> Get Directions! </button>
+	  </form>
+
+		<br>
+
+		<div id = "mapinteractions">
+		<button type="button" onclick="javascript:backtrackDirections()">  Previous Direction </button>
+		<button type="button" onclick="javascript:advanceDirections()">  Next Direction </button>
+		|
+		<button type="button" onclick="javascript:downFloor()">  Down Floor </button>
+		<button type="button" onclick="javascript:upFloor()">  Up Floor </button>
+		</div>
+
+		<p id = "directions"> written directions appear here </p>
+
+		<canvas id = "AHS_Maps" data-processing-sources="AHS_Maps.pde"
+		alt = "The map has had encountered an error while loading">
+		<script>
+				var canvas =	document.getElementById("AHS_Maps");
+				canvas.addEventListener('click', advanceDirections, false);
+				</script>
+			</canvas>
+
+<br>
+
+			<hr width = "100%" size = "5" noshade></hr>
+
+		<p id = "contact">
+			Problems, questions, or comments?
+		<a href="mailto:jkatofsky2018@spyponders.com,gbarker2018@spyponders.com,ko'day2018@spyponders.com
+		?Subject=AHS%20Maps%20Feedback" target="_blank">Get in touch with us.</a>
+		</p>
+
+		<p id = "bottomDetails">
+			Created as a final project for Mr. Sheldon's 2016-2017 C Block AP Computer Science A Class
+			  <br> Maps provided by Ionis Kutrolli of the AHS CADD program
+			<br> Built with <a href="https://en.wikipedia.org/wiki/Processing.js" target="_blank">Processing.js</a>,
+				 <a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a>,
+				 <a href="https://en.wikipedia.org/wiki/HTML" target="_blank">HTML</a>,
+				 and <a href= "https://en.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">CSS</a>
+			 <br>View the source code: <a href = "AHS_Maps.pde" target="_blank"> processing-java source</a> |
+				 <a href ="javascript:openHTMLSource()">HTML source</a>
+		</p>
+
+		<script type="text/javascript">
+			function openHTMLSource(){
+    		var source = "<html> \b";
+    		source += document.documentElement.innerHTML;
+    		source += "\b</html>";
+    		source = source.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+				source = "<pre>" + source + "</pre>";
+
+    		var sourceWindow = window.open();
+    		sourceWindow.document.write(source);
+    		sourceWindow.document.close();
+				sourceWindow.focus();
+			}
+			</script>
+
+
+	</body>
+</html>
